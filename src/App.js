@@ -1,24 +1,27 @@
-import logo from './logo.svg';
+// import {Components} from 'react'
 import './App.css';
+import Home from './Home';
+import Navbar from './Navbar';
+import CreateQuiz from './CreateQuiz';
+import { BrowserRouter as Router, Route, Switch, Routes } from 'react-router-dom'
+import Todo from './Apps/TodoApp';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Todo/>
+    // <Router>
+    //   <div className="App">
+    //     <Navbar />
+    //     <div className='content'>
+    //       <Routes>
+    //         <Route exact path="/" element={<Home />}>
+    //         </Route>
+    //         <Route path="/create" element={<CreateQuiz />} >
+    //         </Route>
+    //       </Routes>
+    //     </div>
+    //   </div>
+    // </Router>
   );
 }
 
