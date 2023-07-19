@@ -9,6 +9,10 @@ import Checkboxes from "./Components/Checkboxes";
 import FAB from "./Components/FloatingActionButton";
 
 const Todo = () => {
+  // return <div className="p-10 flex w-[fit-content] items-center">
+
+  // </div>;
+
   // return (
   //     <div className="p-10 flex w-[fit-content] items-center">
   //     <Buttons/>
@@ -25,46 +29,35 @@ const Todo = () => {
   const [key, setKey] = useState("");
   const handleNewItem = (event) => {
     if (event.key === "Enter") {
-      setList([event.target.value, ...list]);
+      if (event.target.value) {
+        setList([{ value: event.target.value, achieved: false }, ...list]);
+      }
       setTodo("");
     }
   };
 
   const handleItemOnClick = (event) => {
-    setList([todo, ...list]);
+    if (todo) {
+      setList([{ value: todo, achieved: false }, ...list]);
+    }
     setTodo("");
   };
 
   const handleDelete = (id) => {
-    console.log(id);
     list.splice(id, 1);
     setList([...list]);
   };
 
-  const handleEdit = (id) => {
-    setKey(id);
-    setIsEdited(true);
-    if (!isEdited) {
-      setInputValue("");
-    }
-    console.log(list[id]);
-    setInputValue(list[id]);
-  };
-  const handleTextInputChange = (e) => {
-    if (e.key === "Enter") {
-      list[key] = inputValue;
-      setList([...list]);
-      setIsEdited(false);
-    }
-  };
-
   const handleEditComplete = (index, value) => {
-    console.log('handleEditComplete', value)
-    list[index] = value;
+    list[index].value = value;
     setList([...list]);
   };
 
-  console.log(list)
+  const handleAchieve = (id) => {
+    list[id].achieved = true;
+    setList([...list]);
+  };
+
   return (
     <Grid container spacing={2} sx={{ p: 5, rowGap: 4 }}>
       <Grid item xs={12} md={6}>
@@ -74,7 +67,10 @@ const Todo = () => {
           label="Add Text"
           variant="outlined"
           value={todo}
-          onChange={(e) => setTodo(e.target.value)}
+          onChange={(e) => {
+            // console.log(list);
+            setTodo(e.target.value);
+          }}
           onKeyDown={handleNewItem}
           fullWidth
         />
@@ -90,25 +86,13 @@ const Todo = () => {
           Add Todo Item
         </Button>
       </Grid>
-      <Grid item xs={12} md={12}>
-        {isEdited && (
-          <TextField
-            size="small"
-            label="Add Text"
-            variant="outlined"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            onKeyDown={handleTextInputChange}
-            fullWidth
-          />
-        )}
-      </Grid>
+
       <Grid item xs={12}>
         <ListItem
           list={list}
           handleDelete={handleDelete}
-          handleEdit={handleEdit}
           handleEditComplete={handleEditComplete}
+          handleAchieve={handleAchieve}
         />
       </Grid>
     </Grid>

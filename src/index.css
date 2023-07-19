@@ -2,12 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-
+ 
 * {
-  margin: 0;
-  font-family: "arial";
-  color: #333;
+  font-size: 16pt;
 }
+/* .listText{
+  font-weight: 800;
+} */
+/*
 .navbar {
   padding: 20px;
   display: flex;
@@ -71,26 +73,26 @@ input[type="button"]{
   cursor: pointer;
   border: none;
 }
-.option::before{
+.option::before{ */
   /* display: table-column; */
-  content: "Option ";
+  /* content: "Option ";
 }
-.ans::before{
+.ans::before{ */
   /* display: table-column; */
-  content: "Answer ";
+  /* content: "Answer ";
 }
 label{
  text-align: left;
-}
+} */
 /* .options, .answer{
   width: 300px;
   display: flex;
   flex-direction: column;
   margin: auto;
 } */
-button{
+/* button{
   padding: 0.5rem;
   border-radius: 5px;
   border: none;
   cursor: pointer;
-}
+} */
