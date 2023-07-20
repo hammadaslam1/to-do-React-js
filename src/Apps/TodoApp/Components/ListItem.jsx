@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import List from "@mui/material/List";
 import Items from "./Items";
 
-export default function ListItem({ list, handleDelete, handleEditComplete, handleAchieve }) {
+export default function ListItem({ list, handleDelete, handleEditComplete, handleAchieve, editRequest }) {
   return (
     <List sx={{ width: "100%", maxWidth: "100%", bgcolor: "background.paper" }}>
       {list.map((value, index) => {
@@ -15,11 +15,13 @@ export default function ListItem({ list, handleDelete, handleEditComplete, handl
             key={value.value}
             value={value.value}
             achieved={value.achieved}
+            edited={value.edited}
             index={index}
             labelId={labelId}
             handleDelete={handleDelete}
             handleEditComplete={handleEditComplete}
             handleAchieve={handleAchieve}
+            editRequest={editRequest}
           />
         );
       })}

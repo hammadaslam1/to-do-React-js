@@ -14,25 +14,31 @@ import { TextField } from "@mui/material";
 const Items = ({
   value,
   achieved,
+  edited,
   labelId,
   handleDelete,
   index,
   handleEditComplete: handleEditFinal,
   handleAchieve,
+  editRequest
 }) => {
-  const [isEdit, setEdit] = useState(false);
+  // const [isEdit, setEdit] = useState(false);
   const [textValue, setTextValue] = useState(value);
-  const [achieve, setAchieved] = useState(false);
+  // const [achieve, setAchieved] = useState(false);
   const handleEditComplete = () => {
     handleEditFinal(index, textValue);
-    setEdit(false);
+    // setEdit(false);
   };
+
+  const handleEditRequest = () => {
+    editRequest(index, true);
+  }
   // console.log(achieved);
   const handleAchieved = () => {
-    setAchieved(!achieve);
-    if (!achieve) {
-      handleAchieve(index);
-    }
+    // setAchieved(!achieve);
+    // if (!achieve) {
+    handleAchieve(index);
+    // }
   };
   // useEffect(() => {
   //   setTextValue(value);
@@ -44,7 +50,7 @@ const Items = ({
       <LItem
         key={labelId}
         secondaryAction={
-          isEdit ? (
+          edited ? (
             <>
               <IconButton
                 edge="start"
@@ -57,16 +63,18 @@ const Items = ({
             </>
           ) : (
             <>
-              {<IconButton
-                edge="start"
-                aria-label="edit"
-                onClick={() => setEdit(true)}
-                title="Edit"
-                color="primary"
-                disabled={achieved}
-              >
-                <EditIcon />
-              </IconButton>}
+              {
+                <IconButton
+                  edge="start"
+                  aria-label="edit"
+                  onClick={() => handleEditRequest()}
+                  title="Edit"
+                  color="primary"
+                  disabled={achieved}
+                >
+                  <EditIcon />
+                </IconButton>
+              }
               <IconButton
                 edge="end"
                 aria-label="delete"
@@ -83,29 +91,32 @@ const Items = ({
         <ListItemButton
           role={undefined}
           // dense
-          disableRipple   
+          disableRipple
         >
           <ListItemIcon>
-            {(
+            {
               <Checkbox
                 edge="start"
-                
                 // achieved={achieved.indexOf(value) !== -1}
                 tabIndex={-1}
                 onChange={() => handleAchieved()}
                 checked={achieved}
-                title={!achieved?'Mark as read.':'Marked as read.'}
+                title={!achieved ? "Mark as read." : "Marked as read."}
                 disabled={achieved}
                 // disableRipple
                 // inputProps={{ "aria-labelledby": labelId }}
               />
-              )}
+            }
           </ListItemIcon>
-          {!isEdit ? (
+          {!edited ? (
             achieved ? (
               <ListItemText
                 id={labelId}
-                sx={{ textDecoration: "line-through", color: "red", fontWeight: '800' }}
+                sx={{
+                  textDecoration: "line-through",
+                  color: "red",
+                  fontWeight: "800",
+                }}
                 size="large"
                 primary={`${textValue}`}
               />

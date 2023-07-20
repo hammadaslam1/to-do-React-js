@@ -3,10 +3,15 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import ListItem from "./Components/ListItem";
+// import {ref} from 'firebase'
 import Buttons from "./Components/Buttons";
 import ButtonGroups from "./Components/ButtonGroups";
 import Checkboxes from "./Components/Checkboxes";
 import FAB from "./Components/FloatingActionButton";
+import { db, getAuth } from "../../firebase_setup/firebase";
+import { onValue, ref } from "firebase/database";
+import Login from "./Components/Login";
+
 
 const Todo = () => {
   // return <div className="p-10 flex w-[fit-content] items-center">
@@ -22,15 +27,21 @@ const Todo = () => {
   // </div>
   // )
 
+  const auth = getAuth();
+
   const [list, setList] = useState([]);
   const [todo, setTodo] = useState("");
   const [isEdited, setIsEdited] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [key, setKey] = useState("");
+ if (auth.currentUser) {
+
+
+
   const handleNewItem = (event) => {
     if (event.key === "Enter") {
       if (event.target.value) {
-        setList([{ value: event.target.value, achieved: false }, ...list]);
+        setList([{ value: event.target.value, achieved: false, edited: false }, ...list]);
       }
       setTodo("");
     }
@@ -39,6 +50,7 @@ const Todo = () => {
   const handleItemOnClick = (event) => {
     if (todo) {
       setList([{ value: todo, achieved: false }, ...list]);
+      // ref
     }
     setTodo("");
   };
@@ -50,8 +62,14 @@ const Todo = () => {
 
   const handleEditComplete = (index, value) => {
     list[index].value = value;
+    list[index].edited = false;
     setList([...list]);
   };
+
+  const editRequest = (index, edited) => {
+    list[index].edited = edited;
+    setList([...list])
+  }
 
   const handleAchieve = (id) => {
     list[id].achieved = true;
@@ -93,10 +111,17 @@ const Todo = () => {
           handleDelete={handleDelete}
           handleEditComplete={handleEditComplete}
           handleAchieve={handleAchieve}
+          editRequest={editRequest}
         />
       </Grid>
     </Grid>
   );
-};
+}
+else {
+  return (
+    <Login />
+  )
+}
+}
 
 export default Todo;
