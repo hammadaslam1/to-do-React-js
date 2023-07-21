@@ -5,10 +5,12 @@ import Navbar from './Navbar';
 import CreateQuiz from './CreateQuiz';
 import { BrowserRouter as Router, Route, Switch, Routes } from 'react-router-dom'
 import Todo from './Apps/TodoApp';
+import Authentication from './Apps/TodoApp/Components/Authentication';
 
 function App() {
   return (
-    <Todo/>
+    // <Todo/>
+    <Authentication />
     // <Router>
     //   <div className="App">
     //     <Navbar />

@@ -1,50 +1,33 @@
 import TextField from "@mui/material/TextField";
-import {
-  AppBar,
-  Box,
-  Button,
-  Card,
-  DialogTitle,
-  IconButton,
-  MenuItem,
-  Toolbar,
-  Typography,
-} from "@mui/material";
-import { Title } from "@mui/icons-material";
-import MenuIcon from "@mui/icons-material/Menu";
-// import { db, getAuth } from "../../../firebase_setup/firebase";
-import { useState } from "react";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { Box, Button, Card, IconButton, Typography } from "@mui/material";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { useState, React } from "react";
 import { auth } from "../../../firebase_setup/firebase";
 import { useNavigate } from "react-router-dom";
-import CloseIcon from '@mui/icons-material/Close';
 import { Alert } from "@mui/joy";
+import CloseIcon from '@mui/icons-material/Close';
 
-const Login = () => {
-
-
-  
-  const navigate = useNavigate();
-  // const auth = getAuth();
-
+const Signup = () => {
+    
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  
 
-  const userSignin = () => {
-    signInWithEmailAndPassword(auth, email, password)
+  const userSignup = () => {
+    console.log(email, password);
+    createUserWithEmailAndPassword(auth, email, password)
       .then((e) => {
-        console.log("ok", auth.currentUser);
-        navigate("/");
+        navigate("/login");
       })
       .catch((e) => {
         setError(true);
         setErrorMessage("Invalid email or password");
       });
   };
+
   return (
     <div>
       <div className="Signup items-center">
@@ -55,20 +38,17 @@ const Login = () => {
             variant="solid"
             size="sm"
             endDecorator={
-              <IconButton variant="solid" size="sm" color="danger">
-                <CloseIcon
-                  onClick={() => {
-                    setError(false);
-                  }}
-                />
-              </IconButton>
+                <IconButton variant="solid" size="sm" color="danger">
+                  <CloseIcon onClick={() => {
+                    setError(false)
+                  }}/>
+                </IconButton>
             }
           >
-            {errorMessage+"asdsa"}
+            {errorMessage}
           </Alert>
         )}
         <Card
-          //   variant="contained"
           sx={{
             minWidth: "330px",
             maxWidth: "400px",
@@ -77,7 +57,6 @@ const Login = () => {
             margin: "50px auto",
           }}
           elevation={5}
-          //   className="flex flex-col items-center"
         >
           <Typography
             variant="h5"
@@ -88,7 +67,7 @@ const Login = () => {
             }}
             fullWidth
           >
-            Login
+            Signup
           </Typography>
           <TextField
             id="email"
@@ -117,10 +96,10 @@ const Login = () => {
             color="info"
             size="small"
             sx={{ margin: "40px auto", fontWeight: "700", textAlign: "center" }}
-            onClick={() => userSignin()}
             fullWidth
+            onClick={() => userSignup()}
           >
-            Login
+            Signup
           </Button>
         </Card>
       </div>
@@ -128,4 +107,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;

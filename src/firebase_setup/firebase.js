@@ -51,4 +51,5 @@ export {
   collection,
   where,
   addDoc,
+  auth
 };
