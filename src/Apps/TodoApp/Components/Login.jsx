@@ -10,11 +10,8 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import { Title } from "@mui/icons-material";
-import MenuIcon from "@mui/icons-material/Menu";
-// import { db, getAuth } from "../../../firebase_setup/firebase";
 import { useState } from "react";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../firebase_setup/firebase";
 import { useNavigate } from "react-router-dom";
 import CloseIcon from '@mui/icons-material/Close';
@@ -34,12 +31,17 @@ const Login = () => {
 
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+
+  onAuthStateChanged(auth, (user) => {
+    if (auth.currentUser) {
+      navigate("/");
+    }
+  })
   
 
   const userSignin = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((e) => {
-        console.log("ok", auth.currentUser);
         navigate("/");
       })
       .catch((e) => {

@@ -20,7 +20,7 @@ const Items = ({
   index,
   handleEditComplete: handleEditFinal,
   handleAchieve,
-  editRequest
+  editRequest,
 }) => {
   const [textValue, setTextValue] = useState(value);
   const handleEditComplete = () => {
@@ -29,7 +29,7 @@ const Items = ({
 
   const handleEditRequest = () => {
     editRequest(index, true);
-  }
+  };
   const handleAchieved = () => {
     handleAchieve(index);
   };

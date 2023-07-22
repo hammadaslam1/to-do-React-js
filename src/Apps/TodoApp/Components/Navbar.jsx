@@ -3,23 +3,25 @@ import { Link, useNavigate } from "react-router-dom";
 import { Modal, ModalDialog, ModalClose } from "@mui/joy";
 import { auth } from "../../../firebase_setup/firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const Navbar = () => {
+  const [loggedIn, setLoggedIn] = useState(false);
   const navigate = useNavigate();
 
   const userSignout = () => {
     signOut(auth).then(() => {
+      setLoggedIn(false)
       navigate("/login");
     });
   };
-// onAuthStateChanged(auth)
 
-// useEffect(() => {
-  
-// }, [])
+  onAuthStateChanged(auth, (user) => {
+    if (auth.currentUser) {
+      setLoggedIn(true);
+    }
+  });
 
-console.log(auth.currentUser);
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
@@ -28,8 +30,8 @@ console.log(auth.currentUser);
             <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
               To-Do App
             </Typography>
-            
-            {!auth.currentUser ? (
+
+            {!loggedIn ? (
               <div
                 style={{
                   width: "20%",
@@ -49,7 +51,6 @@ console.log(auth.currentUser);
                 <Button
                   variant="contained"
                   color="primary"
-                  
                   onClick={() => userSignout()}
                   disableElevation
                 >
