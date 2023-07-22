@@ -33,7 +33,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
- const db = getDatabase(app);
+const db = getDatabase(app);
 const auth = getAuth(app);
 export const firestore = getFirestore(app);
 
@@ -52,5 +52,5 @@ export {
   where,
   addDoc,
   auth,
-  db
+  db,
 };

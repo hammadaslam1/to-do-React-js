@@ -46,7 +46,6 @@ const Login = () => {
     <div>
       <div className="Signup items-center">
         <Card
-          //   variant="contained"
           sx={{
             minWidth: "330px",
             maxWidth: "400px",
@@ -55,7 +54,6 @@ const Login = () => {
             margin: "50px auto",
           }}
           elevation={5}
-          //   className="flex flex-col items-center"
         >
           <Typography
             variant="h5"

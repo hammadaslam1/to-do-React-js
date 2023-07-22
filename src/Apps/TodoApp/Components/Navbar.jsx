@@ -11,7 +11,7 @@ const Navbar = () => {
 
   const userSignout = () => {
     signOut(auth).then(() => {
-      setLoggedIn(false)
+      setLoggedIn(false);
       navigate("/login");
     });
   };

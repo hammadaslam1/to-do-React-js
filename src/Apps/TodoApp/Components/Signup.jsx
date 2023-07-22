@@ -5,10 +5,9 @@ import { useState, React } from "react";
 import { auth } from "../../../firebase_setup/firebase";
 import { useNavigate } from "react-router-dom";
 import { Alert } from "@mui/joy";
-import CloseIcon from '@mui/icons-material/Close';
+import CloseIcon from "@mui/icons-material/Close";
 
 const Signup = () => {
-    
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -37,11 +36,13 @@ const Signup = () => {
             variant="solid"
             size="sm"
             endDecorator={
-                <IconButton variant="solid" size="sm" color="danger">
-                  <CloseIcon onClick={() => {
-                    setError(false)
-                  }}/>
-                </IconButton>
+              <IconButton variant="solid" size="sm" color="danger">
+                <CloseIcon
+                  onClick={() => {
+                    setError(false);
+                  }}
+                />
+              </IconButton>
             }
           >
             {errorMessage}

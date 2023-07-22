@@ -20,7 +20,6 @@ import Navbar from "./Components/Navbar";
 import Error from "./Components/Error";
 
 const Todo = () => {
-  // const [list, setList] = useState([]);
   const auth = getAuth();
   const [todo, setTodo] = useState("");
   const [task, setTask] = useState([]);
@@ -128,7 +127,6 @@ const Todo = () => {
   if (auth.currentUser) {
     return (
       <div>
-        {/* <Navbar /> */}
         <Grid container spacing={2} sx={{ p: 5, rowGap: 4 }}>
           <Grid item xs={12} md={6}>
             <TextField

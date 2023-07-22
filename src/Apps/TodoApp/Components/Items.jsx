@@ -86,14 +86,11 @@ const Items = ({
             {
               <Checkbox
                 edge="start"
-                // achieved={achieved.indexOf(value) !== -1}
                 tabIndex={-1}
                 onChange={() => handleAchieved()}
                 checked={achieved}
                 title={!achieved ? "Mark as read." : "Marked as read."}
                 disabled={achieved}
-                // disableRipple
-                // inputProps={{ "aria-labelledby": labelId }}
               />
             }
           </ListItemIcon>
