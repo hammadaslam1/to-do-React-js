@@ -1,25 +1,62 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import ListItem from "./Components/ListItem";
-import { auth } from "../../firebase_setup/firebase";
-import { collection, addDoc, db } from "../../firebase_setup/firebase";
+import { auth, firestore } from "../../firebase_setup/firebase";
+import { collection, addDoc, getDocs } from "../../firebase_setup/firebase";
+import {
+  query,
+  where,
+  orderBy,
+  deleteDoc,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
 import Authentication from "./Components/Authentication";
 import Navbar from "./Components/Navbar";
 import Error from "./Components/Error";
 
 const Todo = () => {
-  const [list, setList] = useState([]);
+  // const [list, setList] = useState([]);
   const [todo, setTodo] = useState("");
+  const [task, setTask] = useState([]);
   if (auth.currentUser) {
+    
+    const getTasks = async () => {
+      await getDocs(
+        query(
+          collection(firestore, "todos/" + auth.currentUser.uid + "/task"),
+          orderBy("time", "desc")
+        )
+      ).then((snapshot) => {
+        const data = snapshot.docs.map((doc) => ({
+          ...doc.data(),
+          key: doc.id,
+        }));
+        setTask(data);
+        console.log(data);
+      });
+    };
+
+    
+    let currentTime;
     const handleNewItem = (event) => {
       if (event.key === "Enter") {
         if (event.target.value) {
-          setList([
-            { value: event.target.value, achieved: false, edited: false },
-            ...list,
-          ]);
+          currentTime = new Date().getTime();
+          console.log(currentTime);
+          const taskRef = addDoc(
+            collection(firestore, "todos/" + auth.currentUser.uid + "/task"),
+            {
+              value: event.target.value,
+              achieved: false,
+              edited: false,
+              time: currentTime,
+            }
+          );
+
+          getTasks();
         }
         setTodo("");
       }
@@ -27,31 +64,60 @@ const Todo = () => {
 
     const handleItemOnClick = (event) => {
       if (todo) {
-        setList([{ value: todo, achieved: false }, ...list]);
-        // ref
+        currentTime = new Date().getTime();
+        const taskRef = addDoc(
+          collection(firestore, "todos/" + auth.currentUser.uid + "/task"),
+          { value: todo, achieved: false, edited: false, time: currentTime }
+        );
+        getTasks();
       }
       setTodo("");
     };
 
-    const handleDelete = (id) => {
-      list.splice(id, 1);
-      setList([...list]);
+    const handleDelete =  (index) => {
+       deleteDoc(
+        doc(firestore, "todos/" + auth.currentUser.uid + "/task", index)
+      ).then(() => {
+        getTasks();
+        console.log(index);
+      });
     };
 
     const handleEditComplete = (index, value) => {
-      list[index].value = value;
-      list[index].edited = false;
-      setList([...list]);
+      console.log("in edit");
+       updateDoc(
+        doc(firestore, "todos/" + auth.currentUser.uid + "/task", index),
+        {
+          value: value,
+          edited: false,
+        }
+      ).then(() => {
+        getTasks();
+      });
     };
 
-    const editRequest = (index, edited) => {
-      list[index].edited = edited;
-      setList([...list]);
+    const editRequest =  (index, edited) => {
+      console.log("in edit request");
+       updateDoc(
+        doc(firestore, "todos/" + auth.currentUser.uid + "/task", index),
+        {
+          edited: edited,
+        }
+      ).then(() => {
+        getTasks();
+      });
     };
 
-    const handleAchieve = (id) => {
-      list[id].achieved = true;
-      setList([...list]);
+    const handleAchieve = (index) => {
+      updateDoc(
+        doc(firestore, "todos/" + auth.currentUser.uid + "/task", index),
+        {
+          achieved: true,
+        }
+      ).then(() => {
+        getTasks();
+      });
+      console.log("in achieve");
     };
 
     return (
@@ -66,7 +132,6 @@ const Todo = () => {
               variant="outlined"
               value={todo}
               onChange={(e) => {
-                // console.log(list);
                 setTodo(e.target.value);
               }}
               onKeyDown={handleNewItem}
@@ -75,7 +140,7 @@ const Todo = () => {
           </Grid>
           <Grid item xs={12} md={6}>
             <Button
-              color="secondary"
+              color="info"
               variant="contained"
               onClick={handleItemOnClick}
               disableElevation
@@ -87,7 +152,7 @@ const Todo = () => {
 
           <Grid item xs={12}>
             <ListItem
-              list={list}
+              task={task}
               handleDelete={handleDelete}
               handleEditComplete={handleEditComplete}
               handleAchieve={handleAchieve}

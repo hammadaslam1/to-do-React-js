@@ -1,22 +1,36 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+
+
 import List from "@mui/material/List";
 import Items from "./Items";
+import {
+  firestore,
+  getDocs,
+  collection,
+  auth,
+} from "../../../firebase_setup/firebase";
 
-export default function ListItem({ list, handleDelete, handleEditComplete, handleAchieve, editRequest }) {
+export default function ListItem({
+  task,
+  handleDelete,
+  handleEditComplete,
+  handleAchieve,
+  editRequest,
+}) {
+  
+
+ 
   return (
     <List sx={{ width: "100%", maxWidth: "100%", bgcolor: "background.paper" }}>
-      {list.map((value, index) => {
-        const labelId = `${index}`;
-        // const val = value.value;
-        // const ach = `${list[index].achieved}`;
-        // console.log(list[index].value);
+      {task.map((value, key) => {
+        const labelId = `${key}`;
         return (
           <Items
             key={value.value}
             value={value.value}
             achieved={value.achieved}
             edited={value.edited}
-            index={index}
+            index={value.key}
             labelId={labelId}
             handleDelete={handleDelete}
             handleEditComplete={handleEditComplete}

@@ -18,7 +18,9 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../firebase_setup/firebase";
 import { useNavigate } from "react-router-dom";
 import CloseIcon from '@mui/icons-material/Close';
+import ReportIcon from '@mui/icons-material/Report';
 import { Alert } from "@mui/joy";
+
 
 const Login = () => {
 
@@ -48,25 +50,7 @@ const Login = () => {
   return (
     <div>
       <div className="Signup items-center">
-        {error && (
-          <Alert
-            key="warning"
-            color="danger"
-            variant="solid"
-            size="sm"
-            endDecorator={
-              <IconButton variant="solid" size="sm" color="danger">
-                <CloseIcon
-                  onClick={() => {
-                    setError(false);
-                  }}
-                />
-              </IconButton>
-            }
-          >
-            {errorMessage+"asdsa"}
-          </Alert>
-        )}
+        
         <Card
           //   variant="contained"
           sx={{
@@ -90,6 +74,29 @@ const Login = () => {
           >
             Login
           </Typography>
+          {error && (
+          <Alert
+            key="warning"
+            color="danger"
+            variant="soft"
+            size="sm"
+            sx={{padding: 'unset'}}
+            startDecorator={
+              <ReportIcon />
+            }
+            endDecorator={
+              <IconButton variant="inherit" size="sm" color="inherit">
+                <CloseIcon
+                  onClick={() => {
+                    setError(false);
+                  }}
+                />
+              </IconButton>
+            }
+          >
+            {errorMessage}
+          </Alert>
+        )}
           <TextField
             id="email"
             type="email"

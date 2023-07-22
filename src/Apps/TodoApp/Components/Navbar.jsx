@@ -2,7 +2,8 @@ import { Alert, AppBar, Box, Button, Toolbar, Typography } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { Modal, ModalDialog, ModalClose } from "@mui/joy";
 import { auth } from "../../../firebase_setup/firebase";
-import { signOut, getAuth } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { useEffect } from "react";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -12,7 +13,13 @@ const Navbar = () => {
       navigate("/login");
     });
   };
+// onAuthStateChanged(auth)
 
+// useEffect(() => {
+  
+// }, [])
+
+console.log(auth.currentUser);
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
@@ -41,6 +48,8 @@ const Navbar = () => {
               <div style={{ width: "10%" }}>
                 <Button
                   variant="contained"
+                  color="primary"
+                  
                   onClick={() => userSignout()}
                   disableElevation
                 >

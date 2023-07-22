@@ -22,28 +22,17 @@ const Items = ({
   handleAchieve,
   editRequest
 }) => {
-  // const [isEdit, setEdit] = useState(false);
   const [textValue, setTextValue] = useState(value);
-  // const [achieve, setAchieved] = useState(false);
   const handleEditComplete = () => {
     handleEditFinal(index, textValue);
-    // setEdit(false);
   };
 
   const handleEditRequest = () => {
     editRequest(index, true);
   }
-  // console.log(achieved);
   const handleAchieved = () => {
-    // setAchieved(!achieve);
-    // if (!achieve) {
     handleAchieve(index);
-    // }
   };
-  // useEffect(() => {
-  //   setTextValue(value);
-  //   setAchieved(false);
-  // }, [value, achieve]);
 
   return (
     <div className="items">
