@@ -41,8 +41,6 @@ const Todo = () => {
     });
   };
 
-  
-
   let currentTime;
   const handleNewItem = (event) => {
     if (event.key === "Enter") {
@@ -58,7 +56,7 @@ const Todo = () => {
           }
         );
 
-        // getTasks();
+        getTasks();
       }
       setTodo("");
     }
@@ -118,15 +116,16 @@ const Todo = () => {
     });
   };
 
-  
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      if (auth.currentUser) setLoadedAuth(true);
+      if (auth.currentUser) {
+        setLoadedAuth(true);
+        getTasks();
+      }
     });
   }, []);
-  
+
   if (auth.currentUser) {
-    getTasks();
     return (
       <div>
         {/* <Navbar /> */}

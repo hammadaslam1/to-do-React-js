@@ -11,18 +11,18 @@ import {
   Typography,
 } from "@mui/material";
 import { useState } from "react";
-import { getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import { auth } from "../../../firebase_setup/firebase";
 import { useNavigate } from "react-router-dom";
-import CloseIcon from '@mui/icons-material/Close';
-import ReportIcon from '@mui/icons-material/Report';
+import CloseIcon from "@mui/icons-material/Close";
+import ReportIcon from "@mui/icons-material/Report";
 import { Alert } from "@mui/joy";
 
-
 const Login = () => {
-
-
-  
   const navigate = useNavigate();
   // const auth = getAuth();
 
@@ -31,13 +31,6 @@ const Login = () => {
 
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-
-  onAuthStateChanged(auth, (user) => {
-    if (auth.currentUser) {
-      navigate("/");
-    }
-  })
-  
 
   const userSignin = () => {
     signInWithEmailAndPassword(auth, email, password)
@@ -52,7 +45,6 @@ const Login = () => {
   return (
     <div>
       <div className="Signup items-center">
-        
         <Card
           //   variant="contained"
           sx={{
@@ -77,28 +69,26 @@ const Login = () => {
             Login
           </Typography>
           {error && (
-          <Alert
-            key="warning"
-            color="danger"
-            variant="soft"
-            size="sm"
-            sx={{padding: 'unset'}}
-            startDecorator={
-              <ReportIcon />
-            }
-            endDecorator={
-              <IconButton variant="inherit" size="sm" color="inherit">
-                <CloseIcon
-                  onClick={() => {
-                    setError(false);
-                  }}
-                />
-              </IconButton>
-            }
-          >
-            {errorMessage}
-          </Alert>
-        )}
+            <Alert
+              key="warning"
+              color="danger"
+              variant="soft"
+              size="sm"
+              sx={{ padding: "unset" }}
+              startDecorator={<ReportIcon />}
+              endDecorator={
+                <IconButton variant="inherit" size="sm" color="inherit">
+                  <CloseIcon
+                    onClick={() => {
+                      setError(false);
+                    }}
+                  />
+                </IconButton>
+              }
+            >
+              {errorMessage}
+            </Alert>
+          )}
           <TextField
             id="email"
             type="email"
