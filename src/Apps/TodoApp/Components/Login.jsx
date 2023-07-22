@@ -47,7 +47,7 @@ const Login = () => {
       <div className="Signup items-center">
         <Card
           sx={{
-            minWidth: "330px",
+            minWidth: "320px",
             maxWidth: "400px",
             padding: "45px",
             backgroundColor: "#fff5",

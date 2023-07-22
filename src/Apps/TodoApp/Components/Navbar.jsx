@@ -34,9 +34,9 @@ const Navbar = () => {
             {!loggedIn ? (
               <div
                 style={{
-                  width: "20%",
+                  width: "140px",
                   display: "flex",
-                  justifyContent: "space-around",
+                  justifyContent: "space-between",
                 }}
               >
                 <Link to="/login" color="inherit">
@@ -47,11 +47,12 @@ const Navbar = () => {
                 </Link>
               </div>
             ) : (
-              <div style={{ width: "10%" }}>
+              <div style={{ width: "auto" }}>
                 <Button
                   variant="contained"
                   color="primary"
                   onClick={() => userSignout()}
+                  sx={{width: 'fit-content', padding: '0'}}
                   disableElevation
                 >
                   Signout
