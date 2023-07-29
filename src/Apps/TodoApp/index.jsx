@@ -15,8 +15,6 @@ import {
   doc,
   updateDoc,
 } from "firebase/firestore";
-import Authentication from "./Components/Authentication";
-import Navbar from "./Components/Navbar";
 import Error from "./Components/Error";
 
 const Todo = () => {
@@ -45,6 +43,7 @@ const Todo = () => {
     if (event.key === "Enter") {
       if (event.target.value) {
         currentTime = new Date().getTime();
+        
         const taskRef = addDoc(
           collection(firestore, "todos/" + auth.currentUser.uid + "/task"),
           {
